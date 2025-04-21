@@ -12,7 +12,7 @@ const int butt2 = 2;
 const int buzz1 = 11;
 
 int mainState = 0;
-int timerMinutes = 0;
+int timerMinutes = 1;
 int minute = 60;
 
 unsigned long prevMills = 0;
@@ -80,16 +80,31 @@ void runTimer() {
   display.display();
 }
 
-void buzzerTone() { Serial.println("BUZZER ON"); }
+void buzzerTone() {
+
+  Serial.println("BUZZER ON");
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+  delay(200);
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+  delay(200);
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+}
 
 void timerDone() {
 
   display.clearDisplay();
   display.setTextSize(2);
   display.setTextColor(WHITE);
-  display.setCursor(0, 30);
-  display.println("TIMER DONE!");
+  display.setCursor(10, 30);
+  display.println("TIME'S UP");
   display.display();
+  buzzerTone();
 }
 void setup() {
 
@@ -137,8 +152,15 @@ void loop() {
     Serial.println("Pomo Config");
 
   } else if (but2Val == 0 && mainState == 4) {
-    timerMinutes++;
+    if (timerMinutes > 59) {
+      timerMinutes = 1;
+    } else {
+      timerMinutes++;
+    }
 
+  } else if (but1Val == 0 && mainState == 7) {
+    minute = 60;
+    mainState = 1;
   } else if (but1Val == 0 && mainState == 4) {
 
     timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
