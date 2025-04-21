@@ -1,0 +1,74 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/altair/Arduino/Pomoduino/include",
+                "/home/altair/Arduino/Pomoduino/src",
+                "/home/altair/Arduino/Pomoduino/lib/Adafruit_SH1106",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit GFX Library",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit BusIO",
+                "/home/altair/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/home/altair/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/home/altair/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/home/altair/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit SSD1306",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit_ESP32_SH1106",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/IoAbstraction/src",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/SimpleCollections/src",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/TaskManagerIO/src",
+                "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/TcMenuLog/src",
+                "/home/altair/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/home/altair/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/home/altair/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/altair/Arduino/Pomoduino/include",
+                    "/home/altair/Arduino/Pomoduino/src",
+                    "/home/altair/Arduino/Pomoduino/lib/Adafruit_SH1106",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit GFX Library",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit BusIO",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit SSD1306",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/Adafruit_ESP32_SH1106",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/IoAbstraction/src",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/SimpleCollections/src",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/TaskManagerIO/src",
+                    "/home/altair/Arduino/Pomoduino/.pio/libdeps/nanoatmega328new/TcMenuLog/src",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/home/altair/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60118",
+                "ARDUINO_AVR_NANO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "compilerPath": "/home/altair/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
