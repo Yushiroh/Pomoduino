@@ -15,9 +15,71 @@ int mainState = 0;
 int timerMinutes = 1;
 int breakMinutes = 1;
 int minute = 60;
+int savedMinute;
+int savedBreak;
 
 unsigned long prevMills = 0;
 unsigned long timeInt = 1000;
+
+void buzzerTone() {
+
+  Serial.println("BUZZER ON");
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+  delay(200);
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+  delay(200);
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+}
+
+void workDoneTone() {
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(35, 30);
+  display.println("BREAK TIME!");
+  display.display();
+
+  digitalWrite(buzz1, HIGH);
+  delay(500);
+  digitalWrite(buzz1, LOW);
+  delay(500);
+  digitalWrite(buzz1, HIGH);
+  delay(500);
+  digitalWrite(buzz1, LOW);
+  delay(500);
+  digitalWrite(buzz1, HIGH);
+  delay(500);
+  digitalWrite(buzz1, LOW);
+}
+
+void pomoTone() {
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(35, 30);
+  display.println("SET OVER!");
+  display.display();
+
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+  delay(200);
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+  delay(200);
+  digitalWrite(buzz1, HIGH);
+  delay(200);
+  digitalWrite(buzz1, LOW);
+}
 
 void timerMode() {
 
@@ -84,21 +146,19 @@ void timerConfig(int minutes) {
 void runTimer() {
 
   unsigned long cMills = millis();
-  Serial.println("Function Running");
 
   if (cMills - prevMills >= timeInt) {
     prevMills = cMills;
     minute--;
-    Serial.println("Decrement Seconds");
 
     if ((minute < 0 && timerMinutes > 0) || minute == 60) {
 
       minute = 59;
       timerMinutes--;
-      Serial.println("Decrement Minute");
-
     } else if (minute < 0 && timerMinutes == 0) {
       Serial.println("TIMER DONE!");
+
+      minute = 60;
       mainState = 7;
     }
   }
@@ -114,8 +174,6 @@ void runTimer() {
 }
 
 void runWorkTimer() {
-  Serial.print("Secs: ");
-  Serial.println(minute);
 
   unsigned long cMills = millis();
 
@@ -129,11 +187,17 @@ void runWorkTimer() {
       timerMinutes--;
     } else if (minute < 0 && timerMinutes == 0) {
       Serial.println("TIMER DONE!");
+      minute = 60;
+      workDoneTone();
       mainState = 10;
     }
   }
 
   display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(30, 10);
+  display.println("WORK TIME!");
   display.setTextSize(3);
   display.setTextColor(WHITE);
   display.setCursor(20, 30);
@@ -144,7 +208,6 @@ void runWorkTimer() {
 }
 
 void runBreakTimer() {
-  Serial.print("break");
 
   unsigned long cMills = millis();
 
@@ -155,36 +218,27 @@ void runBreakTimer() {
     if ((minute < 0 && breakMinutes > 0) || minute == 60) {
 
       minute = 59;
+      Serial.println("subtract!");
       breakMinutes--;
     } else if (minute < 0 && breakMinutes == 0) {
       Serial.println("TIMER DONE!");
-      mainState = 7;
+      minute = 60;
+      mainState = 11;
     }
   }
 
   display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(30, 10);
+  display.println("BREAK TIME!");
   display.setTextSize(3);
   display.setTextColor(WHITE);
   display.setCursor(20, 30);
-  display.print(timerMinutes);
+  display.print(breakMinutes);
   display.print(":");
   display.println(minute);
   display.display();
-}
-void buzzerTone() {
-
-  Serial.println("BUZZER ON");
-  digitalWrite(buzz1, HIGH);
-  delay(200);
-  digitalWrite(buzz1, LOW);
-  delay(200);
-  digitalWrite(buzz1, HIGH);
-  delay(200);
-  digitalWrite(buzz1, LOW);
-  delay(200);
-  digitalWrite(buzz1, HIGH);
-  delay(200);
-  digitalWrite(buzz1, LOW);
 }
 
 void timerDone() {
@@ -217,108 +271,132 @@ void setup() {
 }
 
 void loop() {
-  // Serial.print("Mainstate: ");
-  // Serial.print(mainState);
-  // Serial.print(" | Timer Normal: ");
-  // Serial.print(timerMinutes);
-  // Serial.print(" | Work Timer: ");
-  // Serial.print(timerMinutes);
-  // Serial.print(" | Break Timer : ");
-  // Serial.println(breakMinutes);
+  Serial.print("Main State: ");
+  Serial.print(mainState);
+  Serial.print(" | Timer Count: ");
+  Serial.print(timerMinutes);
+  Serial.print(" | Work Count: ");
+  Serial.print(timerMinutes);
+  Serial.print(" | Break Count: ");
+  Serial.print(breakMinutes);
+  Serial.print(" | Break saved: ");
+  Serial.print(savedBreak);
+  Serial.print(" | Work saved: ");
+  Serial.println(savedMinute);
+
   int but1Val = digitalRead(butt1);
   int but2Val = digitalRead(butt2);
   delay(200);
-  if ((minute < 0 && breakMinutes > 0) || minute == 60) {
 
-    if ((but1Val == 0 && mainState == 1) || (but1Val == 0 && mainState == 2)) {
-      mainState++;
-      Serial.println(mainState);
+  if ((but1Val == 0 && mainState == 1) || (but1Val == 0 && mainState == 2)) {
+    mainState++;
+    Serial.println(mainState);
 
-    } else if (but2Val == 0 && mainState == 1) {
-      Serial.println("Timer Config");
-      mainState = 4;
+  } else if (but2Val == 0 && mainState == 1) {
+    Serial.println("Timer Config");
+    mainState = 4;
 
-    } else if (but2Val == 0 && mainState == 2) {
-      Serial.println("Pomo Config");
-      mainState = 5;
+  } else if (but2Val == 0 && mainState == 2) {
+    Serial.println("Pomo Config");
+    mainState = 5;
 
-    } else if (but2Val == 0 && mainState == 4) {
-      if (timerMinutes > 59) {
-        timerMinutes = 1;
-      } else {
-        timerMinutes++;
-      }
-
-    } else if (but2Val == 0 && mainState == 5) {
-      if (timerMinutes > 59) {
-        timerMinutes = 1;
-      } else {
-        timerMinutes++;
-      }
-
-    } else if (but1Val == 0 && mainState == 5) {
-
-      timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
-      mainState = 8;
-
-    } else if (but2Val == 0 && mainState == 8) {
-      if (breakMinutes > 59) {
-        breakMinutes = 1;
-      } else {
-        breakMinutes++;
-      }
-    } else if (but1Val == 0 && mainState == 8) {
-
-      breakMinutes = (breakMinutes > 0) ? breakMinutes - 1 : breakMinutes;
-      mainState = 9;
-
-    } else if (but1Val == 0 && mainState == 7) {
-      minute = 60;
-      mainState = 1;
-    } else if (but1Val == 0 && mainState == 4) {
-
-      timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
-      mainState = 6;
-
+  } else if (but2Val == 0 && mainState == 4) {
+    if (timerMinutes > 59) {
+      timerMinutes = 1;
     } else {
+      timerMinutes++;
+    }
 
-      switch (mainState) {
-      case 1:
-        Serial.println("mode1");
-        timerMode();
-        break;
-      case 2:
-        Serial.println("mode2");
-        pomoMode();
-        break;
-      case 4:
-        timerConfig(timerMinutes);
-        break;
-      case 5:
-        pomoConfig(timerMinutes);
-        break;
-      case 6:
-        // runTimer();
-        runBreakTimer();
-        break;
-      case 7:
-        timerDone();
-        break;
-      case 8:
-        breakTime(breakMinutes);
-        break;
-      case 9:
-        // runWorkTimer();
-        runTimer();
-        break;
-      case 10:
-        runBreakTimer();
-        break;
-      default:
-        Serial.println("Reset State");
-        mainState = 1;
-        break;
-      }
+  } else if (but2Val == 0 && mainState == 5) {
+    if (timerMinutes > 59) {
+      timerMinutes = 1;
+    } else {
+      timerMinutes++;
+    }
+
+  } else if (but1Val == 0 && mainState == 5) {
+
+    timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
+    savedMinute = timerMinutes;
+    mainState = 8;
+
+  } else if (but2Val == 0 && mainState == 8) {
+    if (breakMinutes > 59) {
+      breakMinutes = 1;
+    } else {
+      breakMinutes++;
+    }
+  } else if (but1Val == 0 && mainState == 8) {
+
+    breakMinutes = (breakMinutes > 0) ? breakMinutes - 1 : breakMinutes;
+    savedBreak = breakMinutes;
+    mainState = 9;
+
+  } else if (but1Val == 0 && mainState == 7) {
+    minute = 60;
+    mainState = 1;
+  } else if (but1Val == 0 && mainState == 4) {
+
+    timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
+    mainState = 6;
+
+  } else if (but1Val == 0 && mainState == 11) {
+
+    Serial.println("But1");
+
+    timerMinutes = savedMinute;
+    breakMinutes = savedBreak;
+    minute = 60;
+    mainState = 9;
+
+  } else if (but2Val == 0 && mainState == 11) {
+
+    Serial.println("But2");
+
+    timerMinutes = 1;
+    breakMinutes = 1;
+    minute = 60;
+    mainState = 1;
+
+  } else {
+
+    switch (mainState) {
+    case 1:
+      Serial.println("mode1");
+      timerMode();
+      break;
+    case 2:
+      Serial.println("mode2");
+      pomoMode();
+      break;
+    case 4:
+      timerConfig(timerMinutes);
+      break;
+    case 5:
+      pomoConfig(timerMinutes);
+      break;
+    case 6:
+      runTimer();
+      break;
+    case 7:
+      timerDone();
+      break;
+    case 8:
+      breakTime(breakMinutes);
+      break;
+    case 9:
+      runWorkTimer();
+      break;
+    case 10:
+      runBreakTimer();
+      break;
+    case 11:
+      pomoTone();
+      break;
+    default:
+      Serial.println("Reset State");
+      mainState = 1;
+      break;
     }
   }
 }
