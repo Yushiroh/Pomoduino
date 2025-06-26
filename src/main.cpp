@@ -334,6 +334,7 @@ void loop() {
 
   } else if (but1Val == 0 && mainState == 7) {
     minute = 60;
+    timerMinutes = 1;
     mainState = 1;
   } else if (but1Val == 0 && mainState == 4) {
 
