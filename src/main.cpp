@@ -17,6 +17,7 @@ int breakMinutes = 1;
 int minute = 60;
 int savedMinute;
 int savedBreak;
+int soundState = 1;
 
 unsigned long prevMills = 0;
 unsigned long timeInt = 1000;
@@ -101,6 +102,7 @@ void pomoMode() {
   display.display();
 }
 
+
 void pomoConfig(int minutes) {
 
   display.clearDisplay();
@@ -141,6 +143,27 @@ void timerConfig(int minutes) {
   display.setCursor(50, 30);
   display.println(minutes);
   display.display();
+}
+
+void buzzSet(int soundState) {
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(10, 10);
+  display.println("Buzzer sound:");
+  display.setTextSize(3);
+  display.setTextColor(WHITE);
+  display.setCursor(50, 30);
+  if(soundState == 1){
+    display.println("on");
+  }else
+  {
+    display.println("off");
+  }
+  
+  display.display();
+
 }
 
 void runTimer() {
@@ -251,6 +274,7 @@ void timerDone() {
   display.display();
   buzzerTone();
 }
+
 void setup() {
 
   pinMode(butt1, INPUT_PULLUP);
@@ -339,7 +363,7 @@ void loop() {
   } else if (but1Val == 0 && mainState == 4) {
 
     timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
-    mainState = 6;
+    mainState = 12;
 
   } else if (but1Val == 0 && mainState == 11) {
 
@@ -393,6 +417,9 @@ void loop() {
       break;
     case 11:
       pomoTone();
+      break;
+    case 12:
+      buzzSet(soundState);
       break;
     default:
       Serial.println("Reset State");
