@@ -12,9 +12,9 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "/home/altair/Arduino/Pomoduino/.pio/build/nanoatmega328new/firmware.elf",
+            "executable": "/home/yushiroh/Documents/PlatformIO/Projects/Pomoduino/.pio/build/nanoatmega328new/firmware.elf",
             "projectEnvName": "nanoatmega328new",
-            "toolchainBinDir": "/home/altair/.platformio/packages/toolchain-atmelavr/bin",
+            "toolchainBinDir": "/home/yushiroh/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "preLaunchTask": {
                 "type": "PlatformIO",
@@ -25,18 +25,18 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "/home/altair/Arduino/Pomoduino/.pio/build/nanoatmega328new/firmware.elf",
+            "executable": "/home/yushiroh/Documents/PlatformIO/Projects/Pomoduino/.pio/build/nanoatmega328new/firmware.elf",
             "projectEnvName": "nanoatmega328new",
-            "toolchainBinDir": "/home/altair/.platformio/packages/toolchain-atmelavr/bin",
+            "toolchainBinDir": "/home/yushiroh/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "/home/altair/Arduino/Pomoduino/.pio/build/nanoatmega328new/firmware.elf",
+            "executable": "/home/yushiroh/Documents/PlatformIO/Projects/Pomoduino/.pio/build/nanoatmega328new/firmware.elf",
             "projectEnvName": "nanoatmega328new",
-            "toolchainBinDir": "/home/altair/.platformio/packages/toolchain-atmelavr/bin",
+            "toolchainBinDir": "/home/yushiroh/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "loadMode": "manual"
         }
