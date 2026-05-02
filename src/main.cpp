@@ -145,26 +145,6 @@ void timerConfig(int minutes) {
   display.display();
 }
 
-void buzzSet(int soundState) {
-
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(10, 10);
-  display.println("Buzzer sound:");
-  display.setTextSize(3);
-  display.setTextColor(WHITE);
-  display.setCursor(50, 30);
-  if(soundState == 1){
-    display.println("on");
-  }else
-  {
-    display.println("off");
-  }
-  
-  display.display();
-
-}
 
 void runTimer() {
 
@@ -178,11 +158,13 @@ void runTimer() {
 
       minute = 59;
       timerMinutes--;
+      Serial.println(timerMinutes);
     } else if (minute < 0 && timerMinutes == 0) {
-      Serial.println("TIMER DONE!");
 
       minute = 60;
       mainState = 7;
+
+      Serial.println("TIMER_DONE!");
     }
   }
 
@@ -275,6 +257,28 @@ void timerDone() {
   buzzerTone();
 }
 
+void buzzSet(int soundState) {
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(10, 10);
+  display.println("Buzzer sound:");
+  display.setTextSize(3);
+  display.setTextColor(WHITE);
+  display.setCursor(50, 30);
+
+  if(soundState == 1){
+    display.println("on");
+  }else
+  {
+    display.println("off");
+  }
+  
+  display.display();
+
+}
+
 void setup() {
 
   pinMode(butt1, INPUT_PULLUP);
@@ -363,7 +367,7 @@ void loop() {
   } else if (but1Val == 0 && mainState == 4) {
 
     timerMinutes = (timerMinutes > 0) ? timerMinutes - 1 : timerMinutes;
-    mainState = 12;
+    mainState = 6;
 
   } else if (but1Val == 0 && mainState == 11) {
 
@@ -383,7 +387,17 @@ void loop() {
     minute = 60;
     mainState = 1;
 
-  } else {
+  } else if (but2Val == 0 && mainState == 12) {
+    if (soundState > 1 ) {
+      soundState= 1;
+    } else {
+      soundState++;
+    }
+  }else if (but1Val == 0 && mainState == 12) {
+
+    mainState = 6;
+
+  }else {
 
     switch (mainState) {
     case 1:
